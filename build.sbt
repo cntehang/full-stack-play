@@ -1,4 +1,4 @@
-name := """play-bootstrap4-admin"""
+name := """full-stack-play"""
 
 version := "4.1.0"
 
