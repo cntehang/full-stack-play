@@ -1,6 +1,13 @@
 import play.api.i18n.Langs
 import play.api.mvc.ControllerComponents
-import controllers.{Home, UIElements, Utilities, Pages, ChartTable}
+import controllers.{
+  Home,
+  UIElements,
+  Utilities,
+  Pages,
+  ChartTable,
+  WidgetController
+}
 
 trait ApplicationModule {
 
@@ -11,6 +18,7 @@ trait ApplicationModule {
   lazy val utilities = wire[Utilities]
   lazy val pages = wire[Pages]
   lazy val chartTable = wire[ChartTable]
+  lazy val widgets = wire[WidgetController]
 
   def langs: Langs
 

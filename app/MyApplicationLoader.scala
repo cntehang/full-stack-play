@@ -5,16 +5,18 @@ import play.api._
 import play.api.routing.Router
 import play.filters.HttpFiltersComponents
 import router.Routes
+import play.api.i18n.I18nComponents
 
 class MyApplicationLoader extends ApplicationLoader {
-  def load(context: Context): Application = new ApplicationComponents(context).application
+  def load(context: Context): Application =
+    new ApplicationComponents(context).application
 }
 
-class ApplicationComponents(context: Context) extends BuiltInComponentsFromContext(context)
-  with ApplicationModule
-  with AssetsComponents
-  with HttpFiltersComponents
-{
+class ApplicationComponents(context: Context)
+    extends BuiltInComponentsFromContext(context)
+    with ApplicationModule
+    with AssetsComponents
+    with HttpFiltersComponents {
 
   // set up logger
   LoggerConfigurator(context.environment.classLoader).foreach {
