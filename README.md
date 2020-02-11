@@ -1,6 +1,6 @@
-# 基于 Play 的 Scala 全栈开发模版
+# 基于 Play 的 管理仪表盘
 
-这是一个用 Play 框架实现的基于 [SB Admin 2](https://github.com/BlackrockDigital/startbootstrap-sb-admin-2) 的管理仪表盘（dashbaord）模版。 CSS 框架基于 [Bootstrap 4](https://getbootstrap.com/)。在基本的界面演示功能上增加了 Play 的 Form 提交与基于 jQuery 的 REST 请求功能。
+这是一个用 Play 框架实现的基于 [SB Admin 2](https://github.com/BlackrockDigital/startbootstrap-sb-admin-2) 的管理仪表盘（dashbaord）模版。 CSS 框架基于 [Bootstrap 4](https://getbootstrap.com/)。在基本的界面演示功能上增加了 Play 的 Form 提交与基于 jQuery 的 REST 请求功能。可以作为 Play 的一个全栈开发模版。
 
 版本号与发行日期：
 
