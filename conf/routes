@@ -19,8 +19,8 @@ GET     /chart-table/charts                  controllers.ChartTable.charts
 GET     /chart-table/tables                  controllers.ChartTable.tables
 
 # forms
-GET     /forms/widgets                    controllers.WidgetController.listWidgets
-POST    /forms/widgets                    controllers.WidgetController.createWidget
+GET     /interaction/forms                    controllers.WidgetController.listWidgets
+POST    /interaction/forms                    controllers.WidgetController.createWidget
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

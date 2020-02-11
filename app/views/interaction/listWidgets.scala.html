@@ -1,0 +1,75 @@
+@(widgets: Seq[Widget], form: Form[WidgetForm.Data], postUrl: Call)(implicit request:
+RequestHeader,
+messagesProvider: MessagesProvider)
+
+@localStylesheets = {
+<link href='@routes.Assets.versioned("lib/datatables/css/dataTables.bootstrap4.css")'
+  rel="stylesheet">
+}
+@main.layout(title = "Widget Forms", stylesheets = localStylesheets) {
+
+<h1 class="h3 mb-4 text-gray-800">Widgets</h1>
+
+@* Flash shows updates to a page *@
+@request.flash.data.map{ case (name, value) =>
+<div class="ml-2 my-3">@name: @value</div>
+}
+
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">List of Widgets</h6>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="dataTable" cellspacing="0">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(w <- widgets) { <tr>
+            <td>@w.name</td>
+            <td>@w.price</td>
+            </tr>
+            }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<hr />
+
+<form action="@postUrl" method="POST" class="form-horizontal" role="form">
+  @helper.CSRF.formField
+
+  <div class="form-group row" id="name_price">
+    <div class="col-sm-2 ">
+      <label>Name</label>
+      <input type="text" id="name" name="name" class="form-control">
+    </div>
+
+    <div class="col-sm-2 ">
+      <label>Price</label>
+      <input type="text" id="price" name="price" class="form-control">
+    </div>
+  </div>
+
+  @* display all errors together for simplicity *@
+  @if(form.hasErrors) {
+  @form.errors.map { error: FormError =>
+  <p class="text-danger">
+    @error.key: @error.format
+  </p>
+  }
+  }
+
+  <button type="submit" class="btn btn-success my-3">
+    Create Widget
+  </button>
+
+</form>
+
+}

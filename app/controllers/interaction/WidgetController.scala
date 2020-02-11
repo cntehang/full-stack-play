@@ -25,7 +25,7 @@ class WidgetController(cc: ControllerComponents)
 
   def listWidgets = Action { implicit request =>
     // Pass an unpopulated form to the template
-    Ok(views.html.forms.listWidgets(widgets.toSeq, form, postUrl))
+    Ok(views.html.interaction.listWidgets(widgets.toSeq, widgetForm, postUrl))
   }
 
   // This will be the action that handles our form post
@@ -35,7 +35,8 @@ class WidgetController(cc: ControllerComponents)
       // Let's show the user the form again, with the errors highlighted.
       // Note how we pass the form with errors to the template.
       BadRequest(
-        views.html.forms.listWidgets(widgets.toSeq, formWithErrors, postUrl)
+        views.html.interaction
+          .listWidgets(widgets.toSeq, formWithErrors, postUrl)
       )
     }
 
@@ -44,9 +45,9 @@ class WidgetController(cc: ControllerComponents)
       val widget = Widget(name = data.name, price = data.price)
       widgets += widget
       Redirect(routes.WidgetController.listWidgets())
-        .flashing("info" -> "Widget added!")
+        .flashing("Info: " -> "Widget added!")
     }
 
-    form.bindFromRequest.fold(errorFunction, successFunction)
+    widgetForm.bindFromRequest.fold(errorFunction, successFunction)
   }
 }
