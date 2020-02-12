@@ -1,3 +1,5 @@
+@import models.widget.{Widget, WidgetForm}
+
 @(widgets: Seq[Widget], form: Form[WidgetForm.Data], postUrl: Call)(implicit request:
 RequestHeader,
 messagesProvider: MessagesProvider)

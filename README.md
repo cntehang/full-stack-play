@@ -120,3 +120,28 @@ trait ApplicationModule {
 还需要指定加载程序，在 `conf/application.conf` 加入下面内容：`play.application.loader = MyApplicationLoader`。
 
 现在可以运行 `sbt run` 检查生成的网站。用 `sbt dist` 可以生成可以部署的二进制代码（需要在命令行给出 Application secret 或 事先配置）。
+
+## 5 REST API
+
+### Test
+
+```sh
+
+# get all
+curl http://localhost:9000/api/todos
+
+# get one
+curl http://localhost:9000/api/todos/2
+
+# create a new one
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"name":"todo4","isComplete":"false"}' \
+  http://localhost:9000/api/todos/add
+
+
+# delete one
+curl --header "Content-Type: application/json" \
+  --request DELETE \
+  http://localhost:9000/api/todos/delete/2
+```

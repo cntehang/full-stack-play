@@ -9,6 +9,8 @@ import controllers.{
   WidgetController
 }
 
+import controllers.api.TodoController
+
 trait ApplicationModule {
 
   import com.softwaremill.macwire._
@@ -19,6 +21,8 @@ trait ApplicationModule {
   lazy val pages = wire[Pages]
   lazy val chartTable = wire[ChartTable]
   lazy val widgets = wire[WidgetController]
+
+  lazy val todo = wire[TodoController]
 
   def langs: Langs
 

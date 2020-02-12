@@ -1,16 +1,16 @@
 package controllers
 
-import models.Widget
+import scala.collection._
+
 import play.api.data._
 import play.api.mvc._
 
-import scala.collection._
+import models.widget.{Widget, WidgetForm}
 
 // need I18nSupport for messages api
 class WidgetController(cc: ControllerComponents)
     extends AbstractController(cc)
     with play.api.i18n.I18nSupport {
-  import WidgetForm._
 
   private val widgets = mutable.ArrayBuffer(
     Widget("Widget 1", 123),
@@ -25,12 +25,15 @@ class WidgetController(cc: ControllerComponents)
 
   def listWidgets = Action { implicit request =>
     // Pass an unpopulated form to the template
-    Ok(views.html.interaction.listWidgets(widgets.toSeq, widgetForm, postUrl))
+    Ok(
+      views.html.interaction
+        .listWidgets(widgets.toSeq, WidgetForm.form, postUrl)
+    )
   }
 
   // This will be the action that handles our form post
   def createWidget = Action { implicit request =>
-    val errorFunction = { formWithErrors: Form[Data] =>
+    val errorFunction = { formWithErrors: Form[WidgetForm.Data] =>
       // This is the bad case, where the form had validation errors.
       // Let's show the user the form again, with the errors highlighted.
       // Note how we pass the form with errors to the template.
@@ -40,7 +43,7 @@ class WidgetController(cc: ControllerComponents)
       )
     }
 
-    val successFunction = { data: Data =>
+    val successFunction = { data: WidgetForm.Data =>
       // This is the good case, where the form was successfully parsed as a Data object.
       val widget = Widget(name = data.name, price = data.price)
       widgets += widget
@@ -48,6 +51,6 @@ class WidgetController(cc: ControllerComponents)
         .flashing("Info: " -> "Widget added!")
     }
 
-    widgetForm.bindFromRequest.fold(errorFunction, successFunction)
+    WidgetForm.form.bindFromRequest.fold(errorFunction, successFunction)
   }
 }
