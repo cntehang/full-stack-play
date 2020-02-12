@@ -1,4 +1,4 @@
-name := """full-stack-play"""
+name := """play-admin-dashboard"""
 
 version := "4.1.0"
 

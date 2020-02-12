@@ -1,4 +1,4 @@
-package controllers
+package controllers.interaction
 
 import scala.collection._
 

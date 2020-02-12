@@ -1,0 +1,30 @@
+@import models.todo.{TodoView, TodoForm}
+
+@(todos: Seq[TodoView.Todo], form: Form[TodoForm.Data])(implicit request:
+RequestHeader,
+messagesProvider: MessagesProvider)
+
+@main.layout(title = "Awesome Todos") {
+
+<h4 class="card-title">Awesome Todos</h4>
+<div class="d-flex">
+  <input type="text" class="form-control" placeholder="What do you need to do?">
+  <button class="add btn btn-primary font-weight-bold">Add</button>
+</div>
+
+@for(todo <- TodoView.todoList) { <div>
+  <span class="d-none" data-todoId="@todo.id"></span>
+  <div class="form-check">
+    <label class="form-check-label">
+      <input class="form-check-input" type="checkbox"> @todo.name
+    </label>
+  </div>
+  @if(todo.isComplete) {
+  <i class="fas fa-check fa-fw"></i>
+  } else {
+  <i class="fas fa-angle-double-right fa-fw"></i>
+  }
+
+  </div>
+  }
+  }

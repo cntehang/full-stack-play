@@ -15,18 +15,20 @@ GET     /pages/forget-password              controllers.Pages.forgotPassword
 GET     /pages/not-found                    controllers.Pages.notFound
 GET     /pages/blank                        controllers.Pages.blank
 
-GET     /chart-table/charts                  controllers.ChartTable.charts
-GET     /chart-table/tables                  controllers.ChartTable.tables
+GET     /chart-table/charts                 controllers.ChartTable.charts
+GET     /chart-table/tables                 controllers.ChartTable.tables
 
 # interaction
-GET     /api/forms                    controllers.WidgetController.listWidgets
-POST    /api/forms                    controllers.WidgetController.createWidget
+GET     /interaction/forms                  controllers.interaction.WidgetController.listWidgets
+POST    /interaction/forms                  controllers.interaction.WidgetController.createWidget
 
-GET     /api/todos                    controllers.api.TodoController.getAll
-GET     /api/todos/:id                controllers.api.TodoController.getById(id: Long)
-POST    /api/todos/add                controllers.api.TodoController.add
-PUT     /api/todos/update/:id         controllers.api.TodoController.update(id: Long)
-DELETE  /api/todos/delete/:id         controllers.api.TodoController.delete(id: Long)
+GET     /api/todos                          controllers.api.TodoController.getAll
+GET     /api/todos/:id                      controllers.api.TodoController.getById(id: Long)
+POST    /api/todos/add                      controllers.api.TodoController.add
+PUT     /api/todos/update/:id               controllers.api.TodoController.update(id: Long)
+DELETE  /api/todos/delete/:id               controllers.api.TodoController.delete(id: Long)
+
+GET     /interaction/todos                  controllers.interaction.TodoController.index
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
