@@ -1,24 +1,26 @@
 const TODO_ID_ATTR = 'data-todo-id'
-const selector = `input[${TODO_ID_ATTR}]:checked`
-const SELECTED_URL = 'http://localhost:9000/interaction/todos/selected'
+const selectorIds = `input[${TODO_ID_ATTR}]`
+const selectorChecked = `${selectorIds}:checked`
 
-$('#showSelectedBtn').click(function () {
-  let selected = []
-  $(selector).each(function () {
-    selected += $(this).attr(TODO_ID_ATTR)
+// put the selected ids before submit
+$('#selected_form').submit(function () {
+  const selected = []
+  $(selectorChecked).each(function () {
+    const id = $(this).attr(TODO_ID_ATTR)
+    selected.push(id)
   })
 
-  const data = JSON.stringify(selected)
+  $('#ids').val(selected)
+})
 
-  $.ajax({
-    type: 'POST',
-    url: SELECTED_URL,
-    contentType: 'application/json',
-    data: data,
-    success: selectSuccess,
+$('#select_all_btn').click(function () {
+  $(selectorIds).each(function () {
+    $(this).prop('checked', true)
   })
+})
 
-  function selectSuccess(data) {
-    alert("Returned: " + data)
-  }
+$('#unselect_all_btn').click(function () {
+  $(selectorIds).each(function () {
+    $(this).prop('checked', false)
+  })
 })

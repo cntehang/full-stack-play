@@ -1,4 +1,5 @@
 @import models.todo.{TodoView, TodoForm}
+@import controllers.interaction.routes.TodoController
 
 @(todos: Seq[TodoView.Todo], form: Form[TodoForm.Data])(implicit request:
 RequestHeader,
@@ -23,25 +24,29 @@ messagesProvider: MessagesProvider)
   </a>.
 </p>
 
-<div class="input-group mt-3">
-  <button type="button" class="btn btn-outline-primary mr-2" id="showSelectedBtn">Show
-    Selected</button>
-  <button type="button" class="btn btn-outline-primary mr-2">Show All</button>
-  <button type="button" class="btn btn-outline-primary mr-2">Delete Selected</button>
-</div>
+<div class="input-group mb-1">
+  <form id="selected_form" method="POST" action="@TodoController.selected">
+    @helper.CSRF.formField
+    <input type="hidden" name="ids[]" id="ids">
+    <button type="submit" class="btn btn-outline-primary mr-2" id="showSelectedBtn">
+      Show Selected
+    </button>
+  </form>
 
-<div class="input-group mt-1 mb-3">
-  <input type="text" class="form-control" placeholder="Todo item">
-  <div class="input-group-append">
-    <button class="btn btn-outline-primary" type="button">Add a task</button>
-  </div>
+  <a href="@TodoController.showAll" role="button" class="btn btn-outline-primary ">
+    Show All
+  </a>
+
+  <form method="POST" action="@TodoController.showAll">
+    <button type="submit" class="btn btn-outline-primary mr-2">Show All</button>
+  </form>
 </div>
 
 <div class="card shadow mb-4">
   <div class="card-header py-3">
     <span class="h4 mr-4 font-weight-bold text-primary">Todo Table</span>
-    <button type="button" class="btn btn-outline-info">Select All</button>
-    <button type="button" class="btn btn-outline-info">Unselect All</button>
+    <button type="button" class="btn btn-outline-info" id="select_all_btn">Select All</button>
+    <button type="button" class="btn btn-outline-info" id="unselect_all_btn">Unselect All</button>
   </div>
   <div class="card-body">
     <div class="table-responsive">

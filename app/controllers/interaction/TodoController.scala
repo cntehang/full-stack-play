@@ -18,16 +18,25 @@ class TodoController(cc: ControllerComponents)
   }
 
   def selected() = Action { implicit request: Request[AnyContent] =>
+    logger.debug("enter TodoController::selected")
+    logger.trace(s"selected() recieved body: ${request.body}")
+
     TodoListForm.form.bindFromRequest.fold(
       // if any error in submitted data
       errorForm => {
         val errors = errorForm.errors.map(_.message).mkString(", ")
+        logger.warn(s"Error! ${errors}")
         BadRequest(s"Error! ${errors}")
       },
       data => {
-        logger.error(s"recieved data: ${data.ids}")
-        Ok("hello " + data.ids.mkString(", "))
+        logger.debug(s"ids: ${data.ids}")
+        Ok("Selected ids: " + data.ids.mkString(", "))
       }
     )
+  }
+
+  def showAll() = Action {
+    logger.debug("in showAll")
+    Ok("Show All")
   }
 }
