@@ -23,7 +23,7 @@
 </p>
 
 <div class="input-group mb-1">
-  <form id="selected_form" method="POST" action="@TodoController.selected">
+  <form id="selectedForm" method="POST" action="@TodoController.selected">
     @helper.CSRF.formField
     <button type="submit" class="btn btn-outline-primary mr-2" id="showSelectedBtn">
       Show Selected
@@ -38,8 +38,8 @@
 <div class="card shadow mb-4">
   <div class="card-header py-3">
     <span class="h4 mr-4 font-weight-bold text-primary">Todo Table</span>
-    <button type="button" class="btn btn-outline-info" id="select_all_btn">Select All</button>
-    <button type="button" class="btn btn-outline-info" id="unselect_all_btn">Unselect All</button>
+    <button type="button" class="btn btn-outline-info" id="selectAllBtn">Select All</button>
+    <button type="button" class="btn btn-outline-info" id="unselectAllBtn">Unselect All</button>
   </div>
   <div class="card-body">
     <div class="table-responsive">
