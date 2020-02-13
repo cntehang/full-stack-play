@@ -8,4 +8,4 @@ package models.widget
   *
   * You can also name it with a `Vo` postfix to show that it is an view object.
   */
-case class Widget(name: String, price: Int)
+case class Widget(id: Long, name: String, price: Int)

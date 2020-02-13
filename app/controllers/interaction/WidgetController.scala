@@ -13,9 +13,9 @@ class WidgetController(cc: ControllerComponents)
     with play.api.i18n.I18nSupport {
 
   private val widgets = mutable.ArrayBuffer(
-    Widget("Widget 1", 123),
-    Widget("Widget 2", 456),
-    Widget("Widget 3", 789)
+    Widget(10, "Widget 1", 123),
+    Widget(20, "Widget 2", 456),
+    Widget(30, "Widget 3", 789)
   )
 
   // The URL to the widget.  You can call this directly from the template, but it
@@ -45,7 +45,8 @@ class WidgetController(cc: ControllerComponents)
 
     val successFunction = { data: WidgetForm.Data =>
       // This is the good case, where the form was successfully parsed as a Data object.
-      val widget = Widget(name = data.name, price = data.price)
+      val newId = widgets.length * 100
+      val widget = Widget(newId, name = data.name, price = data.price)
       widgets += widget
       Redirect(routes.WidgetController.listWidgets())
         .flashing("Info: " -> "Widget added!")

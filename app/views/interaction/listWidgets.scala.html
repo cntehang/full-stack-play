@@ -26,12 +26,14 @@ messagesProvider: MessagesProvider)
       <table class="table table-bordered" id="dataTable" cellspacing="0">
         <thead>
           <tr>
+            <th>Id</th>
             <th>Name</th>
             <th>Price</th>
           </tr>
         </thead>
         <tbody>
           @for(w <- widgets) { <tr>
+            <td>@w.id</td>
             <td>@w.name</td>
             <td>@w.price</td>
             </tr>
@@ -50,12 +52,12 @@ messagesProvider: MessagesProvider)
   <div class="form-group row" id="name_price">
     <div class="col-sm-2 ">
       <label>Name</label>
-      <input type="text" id="name" name="name" class="form-control">
+      <input type="text" id="name" name="name" class="form-control" value='@form("name").value'>
     </div>
 
     <div class="col-sm-2 ">
       <label>Price</label>
-      <input type="text" id="price" name="price" class="form-control">
+      <input type="text" id="price" name="price" class="form-control" value='@form("price").value'>
     </div>
   </div>
 

@@ -121,9 +121,60 @@ trait ApplicationModule {
 
 现在可以运行 `sbt run` 检查生成的网站。用 `sbt dist` 可以生成可以部署的二进制代码（需要在命令行给出 Application secret 或 事先配置）。
 
-## 5 REST API
+## 5 Client-side Programming
 
-### Test
+很多时候，在客户端处理数据会比较高效。比如从一个大表里面选择了几行提交处理，这时候只提交选择的几个ID要比提交所有ID更加有效。用JS的处理复杂的页面也更灵活。
+
+客户端的编程有二种模式：多页面导航和单页应用（Single Page Application： SPA）。二种都有其不同的应用场景。对 Play 而言，多页面导航最能发挥后端处理的优势。复杂的单页面应用最好采用前后端分离的方式，前端用 JS 框架来完成。简单的单页面应用可以用 jQuery 和 Play 的 REST API 来完成，下一章给出了后端的REST API例子。
+
+通常的页面跳转用 Play 的 Twirl 框架就足够了。但是在上面例子中，提交数据之后跳转到处理结果页面则需要预处理 POST 的数据。这里给出来一个 Todo 列表的例子说明遇到的问题和解决方案。
+
+### 5.1 Controller
+
+[`WidgetController`](app/controllers/interaction/WidgetController.scala)给出了用 Form 生成数据和显示列表数据的例子。因为不需要修改提交的 Form 数据，整个实现比较简单。值得注意的是，读的数据和写的数据（Form 的 fields）在不同的类里面。这是因为读写的数据通常不一样，比如本例子中表单数据没有 `id`, 这个属性在服务端或数据库生成。
+
+因为表单数据检查生成错误信息时需要用到多语言服务，所以页面会需要一个 `implicit MessagesProvider` 对象。这个可以通过 controller 引入 `with play.api.i18n.I18nSupport` 来提供。
+
+[`TodoController`](app/controllers/interaction/TodoController.scala) 也比较类似，作为不同的例子，在数据转换出错时返回单独的错误页面。其二个方法用同一个页面展示不同的数据。
+
+值得注意的是，这二个 Controller 不在标准的 `controllers` 名字空间下，在页面模版生成路由时需要给出全路径。比如 `hre=@controllers.interaction.routes.TodoController.index`。
+
+### 5.2 页面模版
+
+[`listWidgets.scala.html`](app/views/interaction/listWidgets.scala.html) 是个集创建和显示列表于一页的页面。特别是传入表单对象 [`Form[WidgetForm.Data]`](app/models/widget/WidgetForm.scala) 在同一页展示输入的数据以及数据转换错误信息。
+
+[`todo.scala.html`](app/views/interaction/todo.scala.html) 用于展示传入的数据，同时提供了数据过滤功能和基于 [Bootstrap 4 modal](https://getbootstrap.com/docs/4.4/components/modal/) 对话框提示。这个模版还引入了相应的 JS 代码文件 `<script src='@routes.Assets.versioned("js/interaction/todo-demo.js")'></script>` 做客户端数据处理。
+
+### 5.3 客户端数据处理
+
+[`todo-demo.js`](app/assets/interaction/todo-demo.js) 是 Todo 演示的客户端代码。其重点是修改 Form 提交的数据。这个处理的难点在于 Play 对于 `List[Long]` 和 `list(longNumber)` 的数据转换处理。其要求表单数据的名称必须用 `[]` 作为后缀同时数组数据单独提交。 最终的客户端代码只好在提交时生成控制表单的多个数据项。代码如下：
+
+```js
+// put the selected ids before submit
+// have to append multiple inputs because
+// Play requires "[]"" as a postfix for an array field
+// and each value is separate
+selectedForm$.submit(function () {
+  const checkedItems$ = $(selectorChecked)
+  checkedItems$.each(function () {
+    const id = $(this).attr(TODO_ID_ATTR)
+    const newInput = $('<input>', {
+      type: 'hidden',
+      name: 'ids[]', // must be the same as backend
+      value: id,
+    });
+    selectedForm$.append(newInput)
+  })
+})
+```
+
+这样处理的好处是仅仅修改了提交的数据，而不用改变页面的导航处理。后端页面既可以返回不同页面（虽然用了相同的展示模版，此处用了不同的路径和API，可以算不同页面）也可以用同一页面。
+
+其它的客户端功能相对比较简单，比如全选和全不选的处理以及当没有选择而显示选择数据是，给出提示弹框提醒需要选择最少一行数据。
+
+## 6 REST API
+
+We don't show client side code, but it is easy to send/request JSON data in JS and manipulate a Web page -- the so-call Single Page Application(SPA). As a demo, the project implements several REST APIs. Following are testing curl commands.
 
 ```sh
 
