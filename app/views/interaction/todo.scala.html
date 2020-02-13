@@ -10,11 +10,18 @@ messagesProvider: MessagesProvider)
 }
 @main.layout(title = "Todos", stylesheets = localStylesheets) {
 
-<h1 class="h3 mb-2 text-gray-800">Todo Tasks</h1>
+<h1 class="h3 mb-2 text-gray-800">Todos</h1>
+<p class="mb-4"> We use DatatTables to display todo items.
+  DataTables is a third party plugin, for more information, please visit the
+  <a target="_blank" href="https://datatables.net">
+    official DataTables documentation
+  </a>.
+</p>
 
 <div class="input-group mt-3">
-  <button type="button" class="btn btn-outline-primary">Show Selected</button>
-  <button type="button" class="btn btn-outline-primary">Show All</button>
+  <button type="button" class="btn btn-outline-primary mr-2">Show Selected</button>
+  <button type="button" class="btn btn-outline-primary mr-2">Show All</button>
+  <button type="button" class="btn btn-outline-primary mr-2">Delete Selected</button>
 </div>
 
 <div class="input-group mt-1 mb-3">
