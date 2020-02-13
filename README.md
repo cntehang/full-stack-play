@@ -129,9 +129,11 @@ trait ApplicationModule {
 
 通常的页面跳转用 Play 的 Twirl 框架就足够了。但是在上面例子中，提交数据之后跳转到处理结果页面则需要预处理 POST 的数据。这里给出来一个 Todo 列表的例子说明遇到的问题和解决方案。
 
-### 5.1 Controller
+### 5.1 Controllers and Models
 
-[`WidgetController`](app/controllers/interaction/WidgetController.scala)给出了用 Form 生成数据和显示列表数据的例子。因为不需要修改提交的 Form 数据，整个实现比较简单。值得注意的是，读的数据和写的数据（Form 的 fields）在不同的类里面。这是因为读写的数据通常不一样，比如本例子中表单数据没有 `id`, 这个属性在服务端或数据库生成。
+[`WidgetController`](app/controllers/interaction/WidgetController.scala)给出了用 Form 生成数据和显示列表数据的例子。因为不需要修改提交的 Form 数据，整个实现比较简单。
+
+值得注意的是，读的数据和写的数据（Form 的 fields）在不同的类里面。这是因为读写的数据通常不一样，比如本例子中表单数据没有 `id`, 这个属性在服务端或数据库生成。为了方便代码维护性，Form 的数据模型用文件名用 `Form` 做后缀，如 `WidgetForm`,`TodoForm` and `TodoListForm`。里面的数据类型统一为 `case class Data {...}`, 里面的 `Form[Data]` 实例统一定义成 `val form: Form[Data] = Form(...)`。
 
 因为表单数据检查生成错误信息时需要用到多语言服务，所以页面会需要一个 `implicit MessagesProvider` 对象。这个可以通过 controller 引入 `with play.api.i18n.I18nSupport` 来提供。
 

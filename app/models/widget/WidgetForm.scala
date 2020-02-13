@@ -22,7 +22,7 @@ object WidgetForm {
     * It specifies the form fields and their types,
     * as well as how to convert from a Data to form data and vice versa.
     */
-  val form = Form(
+  val form: Form[Data] = Form(
     mapping(
       "name" -> nonEmptyText,
       "price" -> number(min = 0)
