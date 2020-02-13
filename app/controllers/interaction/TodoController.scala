@@ -6,7 +6,8 @@ import play.api.Logging
 import play.api.mvc._
 
 import models.todo.{TodoForm, TodoListForm}
-import models.todo.TodoView.todoList
+import models.todo.TodoView.{Todo, todoList}
+import org.checkerframework.checker.units.qual.s
 
 class TodoController(cc: ControllerComponents)
     extends AbstractController(cc)
@@ -14,29 +15,28 @@ class TodoController(cc: ControllerComponents)
     with Logging {
 
   def index() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.interaction.todo(todoList.toSeq, TodoForm.form))
+    logger.debug("Enter TodoController::index")
+    Ok(views.html.interaction.todo(todoList.toSeq))
   }
 
   def selected() = Action { implicit request: Request[AnyContent] =>
-    logger.debug("enter TodoController::selected")
-    logger.trace(s"selected() recieved body: ${request.body}")
+    logger.debug("Enter TodoController::selected")
+    logger.debug(s"selected() recieved body: ${request.body}")
 
     TodoListForm.form.bindFromRequest.fold(
       // if any error in submitted data
       errorForm => {
-        val errors = errorForm.errors.map(_.message).mkString(", ")
+        val errors = errorForm.errors.map(_.format).mkString(", ")
         logger.warn(s"Error! ${errors}")
         BadRequest(s"Error! ${errors}")
       },
       data => {
-        logger.debug(s"ids: ${data.ids}")
-        Ok("Selected ids: " + data.ids.mkString(", "))
+        logger.debug(s"ids in POST request: ${data}")
+        val selectedIdSet = data.ids.toSet
+        val selectedItems = todoList.filter(todo => selectedIdSet(todo.id))
+        Ok(views.html.interaction.todo(selectedItems.toSeq))
       }
     )
   }
 
-  def showAll() = Action {
-    logger.debug("in showAll")
-    Ok("Show All")
-  }
 }

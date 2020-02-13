@@ -14,7 +14,7 @@ object TodoListForm {
     * Using a class specifically for form binding reduces the chances
     * of a parameter tampering attack and makes code clearer.
     */
-  case class Data(ids: List[String])
+  case class Data(ids: List[Long])
 
   /**
     * The form definition specifies the form fields and their types,
@@ -22,7 +22,7 @@ object TodoListForm {
     */
   val form = Form(
     mapping(
-      "ids" -> list(text)
+      "ids" -> list(longNumber)
     )(Data.apply)(Data.unapply)
   )
 }

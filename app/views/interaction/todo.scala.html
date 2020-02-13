@@ -1,9 +1,7 @@
 @import models.todo.{TodoView, TodoForm}
 @import controllers.interaction.routes.TodoController
 
-@(todos: Seq[TodoView.Todo], form: Form[TodoForm.Data])(implicit request:
-RequestHeader,
-messagesProvider: MessagesProvider)
+@(todos: Seq[TodoView.Todo])(implicit request: RequestHeader, messagesProvider: MessagesProvider)
 
 @localScripts = {
 <script src='@routes.Assets.versioned("js/interaction/todo-demo.js")'></script>
@@ -27,13 +25,12 @@ messagesProvider: MessagesProvider)
 <div class="input-group mb-1">
   <form id="selected_form" method="POST" action="@TodoController.selected">
     @helper.CSRF.formField
-    <input type="hidden" name="ids[]" id="ids">
     <button type="submit" class="btn btn-outline-primary mr-2" id="showSelectedBtn">
       Show Selected
     </button>
   </form>
 
-  <a href="@TodoController.showAll" role="button" class="btn btn-outline-primary ">
+  <a href="@TodoController.index" role="button" class="btn btn-outline-primary ">
     Show All
   </a>
 </div>
@@ -58,7 +55,7 @@ messagesProvider: MessagesProvider)
           </tr>
         </thead>
         <tbody>
-          @for(todo <- TodoView.todoList) { <tr>
+          @for(todo <- todos) { <tr>
             <td>
               <input type="checkbox" data-todo-id="@todo.id">
             </td>
@@ -73,4 +70,5 @@ messagesProvider: MessagesProvider)
   </div>
 </div>
 
+@common.infoDialog("No Selection", "Please select at least one item.")
 }
