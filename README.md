@@ -139,7 +139,7 @@ trait ApplicationModule {
 
 [`TodoController`](app/controllers/interaction/TodoController.scala) 也比较类似，作为不同的例子，在数据转换出错时返回单独的错误页面。其二个方法用同一个页面展示不同的数据。
 
-值得注意的是，这二个 Controller 不在标准的 `controllers` 名字空间下，在页面模版生成路由时需要给出全路径。比如 `hre=@controllers.interaction.routes.TodoController.index`。
+值得注意的是，这二个 Controller 不在标准的 `controllers` 名字空间下，在页面模版生成路由时需要给出全路径。比如 `href=@controllers.interaction.routes.TodoController.index`。
 
 ### 5.2 页面模版
 
