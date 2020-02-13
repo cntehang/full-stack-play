@@ -26,7 +26,7 @@ class TodoController(cc: ControllerComponents)
       },
       data => {
         logger.error(s"recieved data: ${data.ids}")
-        Ok(data.ids.mkString(", "))
+        Ok("hello " + data.ids.mkString(", "))
       }
     )
   }
