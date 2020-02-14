@@ -55,13 +55,14 @@
           </tr>
         </thead>
         <tbody>
-          @for(todo <- todos) { <tr>
-            <td>
-              <input type="checkbox" data-todo-id="@todo.id">
-            </td>
-            <td>@todo.id</td>
-            <td>@todo.name</td>
-            <td>@todo.isComplete</td>
+          @for(todo <- todos) { 
+            <tr>
+              <td>
+                <input type="checkbox" data-todo-id="@todo.id">
+              </td>
+              <td>@todo.id</td>
+              <td>@todo.name</td>
+              <td>@todo.isComplete</td>
             </tr>
             }
         </tbody>

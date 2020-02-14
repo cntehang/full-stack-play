@@ -63,11 +63,11 @@ messagesProvider: MessagesProvider)
 
   @* display all errors together for simplicity *@
   @if(form.hasErrors) {
-  @form.errors.map { error: FormError =>
-  <p class="text-danger">
-    @error.key: @error.format
-  </p>
-  }
+    @form.errors.map { error: FormError =>
+    <p class="text-danger">
+      @error.key: @error.format
+    </p>
+    }
   }
 
   <button type="submit" class="btn btn-success my-3">
